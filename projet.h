@@ -32,6 +32,8 @@ Prod ajouterProduit(int id, char username[20]);
 void afficherProduitsDepuisCSV(const char* utilisateur);
 int supprimerProduit(Prod produits[], int nbr_produit, int index);
 void modifierProduit(Prod produits[], int index);
+void rechercherProduit(Prod produits[], int nbr_produit, const char* nomProduit, const char* utilisateurConnecte);
+void trierProduits(Prod produits[], int nbr_produit);
 
 #endif // PROJET_H
 
