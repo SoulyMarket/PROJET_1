@@ -16,12 +16,12 @@ Ce programme permet de gérer une liste de produits en offrant des fonctionnalit
 ## Structure du programme
 
 ### Inclusion des bibliothèques et fichiers nécessaires
-```c
+
 #include <stdio.h>
 #include <string.h>
 #include "projet.h"
 
-#### Définition des variables principales
+### Inclusion des variables principales
 ```c
 Prod produits[100];
 int nbr_produit = 0;
@@ -29,13 +29,13 @@ char utilisateurConnecte[20] = "";
 int estConnecte = 0;
 int choix;
 
-### Fonctionnement du programme
+ Fonctionnement du programme
 Le programme utilise une boucle infinie pour afficher différents menus en fonction de l'état de connexion de l'utilisateur. Deux menus principaux sont définis : un pour les utilisateurs non connectés et un autre pour les utilisateurs connectés.
 
 ---
 
-#### Menu pour les utilisateurs non connectés
-```c
+Menu pour les utilisateurs non connectés
+
 if (estConnecte == 0) {
     printf("\n=== Menu Principal ===\n");
     printf("1. S'inscrire\n");
@@ -44,7 +44,7 @@ if (estConnecte == 0) {
     scanf("%d", &choix);
 }
 
-#### Menu pour les utilisateurs connectés
+ Menu pour les utilisateurs connectés
 ```c
 if (estConnecte == 1) {
     printf("\n=== Menu Principal ===\n");
@@ -56,7 +56,7 @@ if (estConnecte == 1) {
     printf("Choix : ");
     scanf("%d", &choix);
 }
-### Gestion des choix avec `switch`
+Gestion des choix avec `switch`
 
 Lorsque l'utilisateur est connecté, un menu principal propose différentes options. Ces choix sont gérés à l'aide d'une structure `switch`. Voici les explications détaillées des cas disponibles :
 
