@@ -238,3 +238,30 @@ void modifierProduit(Prod produits[], int index) {
     fclose(fichier);
 }
 
+void rechercherProduit(Prod produits[], int nbr_produit, const char* nomProduit, const char* utilisateurConnecte) {
+    int trouve = 0;
+    for (int i = 0; i < nbr_produit; i++) {
+        if (strcmp(produits[i].name, nomProduit) == 0 && strcmp(produits[i].username, utilisateurConnecte) == 0) {
+            printf("Produit trouvé: %s, Prix: %.2f\n", produits[i].name, produits[i].price);
+            trouve = 1;
+        }
+    }
+    if (!trouve) {
+        printf("Aucun produit trouvé avec le nom '%s' pour l'utilisateur '%s'.\n", nomProduit, utilisateurConnecte);
+    }
+}
+
+void trierProduits(Prod produits[], int nbr_produit) {
+
+    for (int i = 0; i < nbr_produit - 1; i++) {
+        for (int j = 0; j < nbr_produit - 1 - i; j++) {
+            if (strcmp(produits[j].name, produits[j + 1].name) > 0 ||
+               (strcmp(produits[j].name, produits[j + 1].name) == 0 && produits[j].price > produits[j + 1].price)) {
+                Prod temp = produits[j];
+                produits[j] = produits[j + 1];
+                produits[j + 1] = temp;
+            }
+        }
+    }
+    printf("Produits triés par name et price.\n");
+}
