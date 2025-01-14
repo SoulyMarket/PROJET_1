@@ -131,3 +131,55 @@ switch (choix) {
         printf("Choix invalide. Essayez encore.\n");
 }
 
+### Fonction `rechercherProduit`
+
+Cette fonction permet de rechercher un produit en fonction de son nom et de l'utilisateur connecté.
+
+```c
+void rechercherProduit(Prod produits[], int nbr_produit, const char* nomProduit, const char* utilisateurConnecte) {
+    int trouve = 0;  // Initialisation d'un indicateur de recherche
+
+    // Boucle sur tous les produits pour effectuer la recherche
+    for (int i = 0; i < nbr_produit; i++) {
+        // Si le nom du produit correspond et que l'utilisateur est le même
+        if (strcmp(produits[i].name, nomProduit) == 0 && strcmp(produits[i].utilisateur, utilisateurConnecte) == 0) {
+            // Si trouvé, affiche le produit
+            printf("Produit trouvé: %s, Prix: %.2f\n", produits[i].name, produits[i].price);
+            trouve = 1;  // Indique que le produit a été trouvé
+        }
+    }
+
+    // Si aucun produit n'a été trouvé
+    if (!trouve) {
+        printf("Aucun produit trouvé avec le nom '%s' pour l'utilisateur '%s'.\n", nomProduit, utilisateurConnecte);
+    }
+}
+
+## Description
+
+La fonction `trierProduits()` permet de trier un tableau de produits (`Prod`) en fonction de leur nom, et si deux produits ont le même nom, elle les trie également par prix. Elle utilise un tri à bulles (bubble sort) pour réorganiser les produits.
+
+---
+
+### Fonction `trierProduits`
+
+Cette fonction prend un tableau de produits et son nombre d'éléments, puis trie ces produits par nom et prix.
+
+```c
+void trierProduits(Prod produits[], int nbr_produit) {
+    // Tri par name, puis par price si les names sont identiques
+    for (int i = 0; i < nbr_produit - 1; i++) {
+        for (int j = 0; j < nbr_produit - 1 - i; j++) {
+            // Comparaison par name, puis par price
+            if (strcmp(produits[j].name, produits[j + 1].name) > 0 || 
+               (strcmp(produits[j].name, produits[j + 1].name) == 0 && produits[j].price > produits[j + 1].price)) {
+                
+                // Échange des produits
+                Prod temp = produits[j];
+                produits[j] = produits[j + 1];
+                produits[j + 1] = temp;
+            }
+        }
+    }
+    printf("Produits triés par name et price.\n");
+}
