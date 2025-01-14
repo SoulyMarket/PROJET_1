@@ -21,7 +21,7 @@ Ce programme permet de gérer une liste de produits en offrant des fonctionnalit
 #include <string.h>
 #include "projet.h"
 
-### Définition des variables principales
+#### Définition des variables principales
 ```c
 Prod produits[100];
 int nbr_produit = 0;
