@@ -47,12 +47,14 @@ if (estConnecte == 0) {
  Menu pour les utilisateurs connectés
 ```c
 if (estConnecte == 1) {
-    printf("\n=== Menu Principal ===\n");
+   printf("\n=== Menu Principal ===\n");
     printf("3. Ajouter un produit\n");
     printf("4. Afficher les produits\n");
     printf("5. Modifier un produit\n");
     printf("6. Supprimer un produit\n");
-    printf("7. Quitter\n");
+    printf("7. Rechercher un produit\n");
+    printf("8. Trier les produits\n");
+    printf("9. Quitter\n");
     printf("Choix : ");
     scanf("%d", &choix);
 }
@@ -60,76 +62,105 @@ Gestion des choix avec `switch`
 
 Lorsque l'utilisateur est connecté, un menu principal propose différentes options. Ces choix sont gérés à l'aide d'une structure `switch`. Voici les explications détaillées des cas disponibles :
 
-1. **Ajouter un produit (Choix 3)**  
-   Cette option permet à l'utilisateur d'ajouter un nouveau produit.  
-   - La fonction `ajouterProduit()` est appelée avec deux arguments : le numéro du produit (basé sur le compteur `nbr_produit`) et le nom de l'utilisateur connecté.
-   - Le produit créé est ajouté au tableau `produits`.
-   - Le compteur `nbr_produit` est incrémenté pour refléter l'ajout.
+Ajouter un produit (Choix 3)
+Cette option permet à l'utilisateur d'ajouter un nouveau produit.
 
-2. **Afficher les produits (Choix 4)**  
-   Cette option affiche la liste des produits associés à l'utilisateur connecté.  
-   - La fonction `afficherProduitsDepuisCSV()` lit les données dans un fichier CSV spécifique à l'utilisateur et affiche chaque produit.
+La fonction ajouterProduit() est appelée avec deux arguments : le numéro du produit (basé sur le compteur nbr_produit) et le nom de l'utilisateur connecté.
+Le produit créé est ajouté au tableau produits.
+Le compteur nbr_produit est incrémenté pour refléter l'ajout.
+Afficher les produits (Choix 4)
+Cette option affiche la liste des produits associés à l'utilisateur connecté.
 
-3. **Modifier un produit (Choix 5)**  
-   Cette option permet de mettre à jour les informations d'un produit existant.  
-   - L'utilisateur est invité à entrer l'index du produit qu'il souhaite modifier. Cet index doit être compris entre 1 et le nombre total de produits (`nbr_produit`).
-   - Si l'index est valide, la fonction `modifierProduit()` est appelée pour mettre à jour le produit dans le tableau.
-   - Si l'index est invalide, un message d'erreur est affiché.
+La fonction afficherProduitsDepuisCSV() lit les données dans un fichier CSV spécifique à l'utilisateur et affiche chaque produit.
+Modifier un produit (Choix 5)
+Cette option permet de mettre à jour les informations d'un produit existant.
 
-4. **Supprimer un produit (Choix 6)**  
-   Cette option permet à l'utilisateur de supprimer un produit.  
-   - L'utilisateur doit fournir l'index du produit qu'il souhaite supprimer, compris entre 1 et `nbr_produit`.
-   - Si l'index est valide, la fonction `supprimerProduit()` est appelée pour retirer le produit du tableau. Le compteur `nbr_produit` est mis à jour.
-   - En cas d'index invalide, un message d'erreur est affiché.
+L'utilisateur est invité à entrer l'index du produit qu'il souhaite modifier. Cet index doit être compris entre 1 et le nombre total de produits (nbr_produit).
+Si l'index est valide, la fonction modifierProduit() est appelée pour mettre à jour le produit dans le tableau.
+Si l'index est invalide, un message d'erreur est affiché.
+Supprimer un produit (Choix 6)
+Cette option permet à l'utilisateur de supprimer un produit.
 
-5. **Quitter (Choix 7)**  
-   Cette option met fin à l'exécution du programme.  
-   - Un message de départ est affiché : `Au revoir !`.
-   - Le programme se termine avec la commande `return 0`.
+L'utilisateur doit fournir l'index du produit qu'il souhaite supprimer, compris entre 1 et nbr_produit.
+Si l'index est valide, la fonction supprimerProduit() est appelée pour retirer le produit du tableau. Le compteur nbr_produit est mis à jour.
+En cas d'index invalide, un message d'erreur est affiché.
+Rechercher un produit (Nouvelle Fonction)
+Cette option permet à l'utilisateur de rechercher un produit spécifique en fonction de son nom et de l'utilisateur connecté.
 
-6. **Choix invalide (Default)**  
-   Si l'utilisateur entre une option non prise en charge, le programme affiche le message suivant :  
-   `Choix invalide. Essayez encore.`
+La fonction rechercherProduit() est appelée avec trois arguments : le tableau produits, le nombre total de produits nbr_produit, et le nom du produit recherché.
+Si un produit correspondant est trouvé, ses détails (nom et prix) sont affichés.
+Si aucun produit correspondant n'est trouvé, un message d'erreur indique que le produit n'existe pas pour l'utilisateur actuel.
+Trier les produits (Nouvelle Fonction)
+Cette option permet de trier les produits d'abord par leur nom, puis par leur prix en cas d'égalité des noms.
+
+La fonction trierProduits() est appelée avec deux arguments : le tableau produits et le nombre total de produits nbr_produit.
+Le tri est effectué directement dans le tableau, et un message confirme que les produits ont été triés avec succès.
+Quitter (Choix 7)
+Cette option met fin à l'exécution du programme.
+
+Un message de départ est affiché : Au revoir !.
+Le programme se termine avec la commande return 0.
+Choix invalide (Default)
+Si l'utilisateur entre une option non prise en charge, le programme affiche le message suivant :
+Choix invalide. Essayez encore.
+
+
 
 ---
 
 Le code correspondant est organisé comme suit :
 
 ```c
-switch (choix) {
-    case 3:
-        produits[nbr_produit] = ajouterProduit(nbr_produit + 1, utilisateurConnecte);
-        nbr_produit++;
-        break;
-    case 4:
-        afficherProduitsDepuisCSV(utilisateurConnecte);
-        break;
-    case 5:
-        printf("Entrez l'index du produit a modifier (1 a %d) : ", nbr_produit);
-        int indexModif;
-        scanf("%d", &indexModif);
-        if (indexModif > 0 && indexModif <= nbr_produit) {
-            modifierProduit(produits, indexModif - 1);
-        } else {
-            printf("Index invalide.\n");
+ switch (choix) {
+        case 3:
+            produits[nbr_produit] = ajouterProduit(nbr_produit + 1, utilisateurConnecte);
+            nbr_produit++;
+            break;
+
+        case 4:
+            afficherProduitsDepuisCSV(utilisateurConnecte);
+            break;
+
+        case 5:
+            printf("Entrez l'index du produit a modifier (1 a %d) : ", nbr_produit);
+            int indexModif;
+            scanf("%d", &indexModif);
+            if (indexModif > 0 && indexModif <= nbr_produit) {
+                modifierProduit(produits, indexModif - 1);
+            } else {
+                printf("Index invalide.\n");
+            }
+            break;
+
+        case 6:
+            printf("Entrez l'index du produit à supprimer (1 à %d) : ", nbr_produit);
+            int indexSuppr;
+            scanf("%d", &indexSuppr);
+            if (indexSuppr > 0 && indexSuppr <= nbr_produit) {
+                nbr_produit = supprimerProduit(produits, nbr_produit, indexSuppr - 1);
+            } else {
+                printf("Index invalide.\n");
+            }
+            break;
+
+        case 7: {
+            char nomProduit[100];
+            printf("Entrez le nom du produit à rechercher : ");
+            scanf("%s", nomProduit);
+            rechercherProduit(produits, nbr_produit, nomProduit, utilisateurConnecte);
+            break;
         }
-        break;
-    case 6:
-        printf("Entrez l'index du produit à supprimer (1 à %d) : ", nbr_produit);
-        int indexSuppr;
-        scanf("%d", &indexSuppr);
-        if (indexSuppr > 0 && indexSuppr <= nbr_produit) {
-            nbr_produit = supprimerProduit(produits, nbr_produit, indexSuppr - 1);
-        } else {
-            printf("Index invalide.\n");
-        }
-        break;
-    case 7:
-        printf("Au revoir !\n");
-        return 0;
-    default:
-        printf("Choix invalide. Essayez encore.\n");
-}
+
+        case 8:
+            trierProduits(produits, nbr_produit);
+            break;
+
+        case 9:
+            printf("Au revoir !\n");
+            return 0;
+
+        default:
+            printf("Choix invalide. Essayez encore.\n");
 
 ### Fonction `rechercherProduit`
 
